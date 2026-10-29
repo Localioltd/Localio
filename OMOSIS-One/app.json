@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "OMOSIS One",
+    "slug": "omosis-one",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#F8F6EF",
+      "resizeMode": "contain",
+      "image": "./assets/omosis-splash.png",
+      "imageWidth": 220
+    },
+    "android": {
+      "package": "in.omosis.one",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#F8F6EF",
+        "foregroundImage": "./assets/omosis-icon.png"
+      }
+    },
+    "plugins": [],
+    "icon": "./assets/omosis-icon.png"
+  }
+}
