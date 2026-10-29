@@ -1,0 +1,53 @@
+
+name: Build OMOSIS Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "OMOSIS_Purple_White_Android_Source/OmosisAndroid/**"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install dependencies
+        working-directory: OMOSIS_Purple_White_Android_Source/OmosisAndroid
+        run: npm install
+
+      - name: Generate Android project
+        working-directory: OMOSIS_Purple_White_Android_Source/OmosisAndroid
+        run: npx expo prebuild --platform android --no-install --non-interactive
+
+      - name: Build APK
+        working-directory: OMOSIS_Purple_White_Android_Source/OmosisAndroid
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Omosis-Android-APK
+          path: OMOSIS_Purple_White_Android_Source/OmosisAndroid/android/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
